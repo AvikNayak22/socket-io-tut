@@ -18,6 +18,18 @@ app.get("/", function (req, res) {
 io.on("connection", function (socket) {
   console.log("A user connected");
 
+  // setTimeout(function () {
+  //   // socket.send("Sent message from server side by prereserved events");
+
+  //   socket.emit("myCustomEvent", {
+  //     description: "A custom message from server side",
+  //   });
+  // }, 3000);
+
+  socket.on("myCustomEventFromClient", function (data) {
+    console.log(data);
+  });
+
   socket.on("disconnect", function () {
     console.log("A user disconnected");
   });

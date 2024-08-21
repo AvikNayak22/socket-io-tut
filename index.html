@@ -11,6 +11,18 @@
   <body>
     <script>
       const socket = io();
+      // socket.on("message", function (data) {
+      //   document.write(data);
+      // });
+
+      // socket.on("myCustomEvent", function (data) {
+      //   document.write(data.description);
+      // });
+
+      socket.emit(
+        "myCustomEventFromClient",
+        "A custom message from client side"
+      );
     </script>
   </body>
 </html>
