@@ -15,8 +15,20 @@ app.get("/", function (req, res) {
   res.sendFile(fileName, options);
 });
 
+const users = 0;
+
 io.on("connection", function (socket) {
   console.log("A user connected");
+  users++;
+  // io.sockets.emit("broadcast", {
+  //   message: users + " users connected",
+  // });
+
+  socket.emit("newuserconnect", { message: "Hii" });
+
+  socket.broadcast.emit("newuserconnect", {
+    message: users + "Users connected",
+  });
 
   // setTimeout(function () {
   //   // socket.send("Sent message from server side by prereserved events");
@@ -26,12 +38,21 @@ io.on("connection", function (socket) {
   //   });
   // }, 3000);
 
-  socket.on("myCustomEventFromClient", function (data) {
-    console.log(data);
-  });
+  // socket.on("myCustomEventFromClient", function (data) {
+  //   console.log(data);
+  // });
 
   socket.on("disconnect", function () {
     console.log("A user disconnected");
+
+    users--;
+    // io.sockets.emit("broadcast", {
+    //   message: users + " users connected",
+    // });
+
+    socket.broadcast.emit("newuserconnect", {
+      message: users + "Users connected",
+    });
   });
 });
 
