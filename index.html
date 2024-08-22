@@ -10,13 +10,19 @@
 
   <body>
     <script>
-      // const socket = io();
-      const socket = io("/custom-namespace");
+      const socket = io();
 
-      socket.on("customEvent", function (data) {
+      socket.on("connectedRoom", function (data) {
         document.body.innerHTML = "";
         document.write(data);
       });
+
+      // const socket = io("/custom-namespace");
+
+      // socket.on("customEvent", function (data) {
+      //   document.body.innerHTML = "";
+      //   document.write(data);
+      // });
 
       // socket.on("newuserconnect", function (data) {
       //   document.body.innerHTML = "";

@@ -17,22 +17,37 @@ app.get("/", function (req, res) {
 
 // const users = 0;
 
-const cnsp = io.of("custom-namespace");
+// const cnsp = io.of("custom-namespace");
 
-cnsp.on("connection", function (socket) {
-  console.log("A user connected");
+// cnsp.on("connection", function (socket) {
+//   console.log("A user connected");
 
-  cnsp.emit("customEvent", "Tester event called");
+//   cnsp.emit("customEvent", "Tester event called");
 
-  socket.on("disconnect", function () {
-    console.log("A user disconnected");
-  });
-});
+//   socket.on("disconnect", function () {
+//     console.log("A user disconnected");
+//   });
+// });
+
+let roomno = 1;
+let full = 0;
 
 io.on("connection", function (socket) {
   console.log("A user connected");
 
-  io.emit("testEvent", "Tester event called");
+  socket.join("room-" + roomno);
+
+  io.sockets
+    .in("room-" + roomno)
+    .emit("connectedRoom", "You are connected to room no " + roomno);
+
+  full++;
+  if (full >= 2) {
+    full = 0;
+    roomno++;
+  }
+
+  // io.emit("testEvent", "Tester event called");
 
   // users++;
   // io.sockets.emit("broadcast", {
