@@ -15,20 +15,35 @@ app.get("/", function (req, res) {
   res.sendFile(fileName, options);
 });
 
-const users = 0;
+// const users = 0;
+
+const cnsp = io.of("custom-namespace");
+
+cnsp.on("connection", function (socket) {
+  console.log("A user connected");
+
+  cnsp.emit("customEvent", "Tester event called");
+
+  socket.on("disconnect", function () {
+    console.log("A user disconnected");
+  });
+});
 
 io.on("connection", function (socket) {
   console.log("A user connected");
-  users++;
+
+  io.emit("testEvent", "Tester event called");
+
+  // users++;
   // io.sockets.emit("broadcast", {
   //   message: users + " users connected",
   // });
 
-  socket.emit("newuserconnect", { message: "Hii" });
+  // socket.emit("newuserconnect", { message: "Hii" });
 
-  socket.broadcast.emit("newuserconnect", {
-    message: users + "Users connected",
-  });
+  // socket.broadcast.emit("newuserconnect", {
+  //   message: users + "Users connected",
+  // });
 
   // setTimeout(function () {
   //   // socket.send("Sent message from server side by prereserved events");
@@ -45,14 +60,14 @@ io.on("connection", function (socket) {
   socket.on("disconnect", function () {
     console.log("A user disconnected");
 
-    users--;
+    // users--;
     // io.sockets.emit("broadcast", {
     //   message: users + " users connected",
     // });
 
-    socket.broadcast.emit("newuserconnect", {
-      message: users + "Users connected",
-    });
+    // socket.broadcast.emit("newuserconnect", {
+    //   message: users + "Users connected",
+    // });
   });
 });
 

@@ -10,12 +10,18 @@
 
   <body>
     <script>
-      const socket = io();
+      // const socket = io();
+      const socket = io("/custom-namespace");
 
-      socket.on("newuserconnect", function (data) {
+      socket.on("customEvent", function (data) {
         document.body.innerHTML = "";
-        document.write(data.message);
+        document.write(data);
       });
+
+      // socket.on("newuserconnect", function (data) {
+      //   document.body.innerHTML = "";
+      //   document.write(data.message);
+      // });
 
       // socket.on("broadcast", function (data) {
       //   document.body.innerHTML = "";
