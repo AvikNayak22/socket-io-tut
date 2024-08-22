@@ -12,10 +12,22 @@
     <script>
       const socket = io();
 
-      socket.on("connectedRoom", function (data) {
-        document.body.innerHTML = "";
-        document.write(data);
+      socket.on("connect_failed", function () {
+        alert("Sorry, Your connection failed");
       });
+
+      socket.on("reconnecting", function () {
+        alert("Your are reconnected");
+      });
+
+      socket.on("reconnect_failed", function () {
+        alert("Failed to reconnected");
+      });
+
+      // socket.on("connectedRoom", function (data) {
+      //   document.body.innerHTML = "";
+      //   document.write(data);
+      // });
 
       // const socket = io("/custom-namespace");
 
